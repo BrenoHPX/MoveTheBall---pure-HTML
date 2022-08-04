@@ -1,0 +1,58 @@
+<canvas width="800" height="640"></canvas>
+
+<script>
+
+    var screenX = 800;
+    var screenY = 640;
+    var backgroundColor = "blue";
+
+    var ballColor = "red";
+    var ballSpeed = 1;
+    var raio = 60;
+
+    var y = screenY/2;
+    var x = raio;
+
+    var i = raio;
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = backgroundColor;
+    pincel.fillRect(0, 0, screenX, screenY);
+
+    function desenhaCirculo(x, y, raio) {
+        pincel.fillStyle = backgroundColor;
+        pincel.fillRect(0, 0, screenX, screenY);
+        pincel.fillStyle = ballColor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2*Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0, 0, screenX, screenY);
+    }
+
+    function atualizaTela() {
+        var touchRight = (screenX-raio);
+        var touchLeft = (touchRight+(screenX-raio*2))
+
+        if(i>=0 && i<(touchRight)){
+            limpaTela();
+            desenhaCirculo(x,y,raio);
+            x++;
+            i++;
+       } else if (i>=touchRight && i<touchLeft) {
+            limpaTela();
+            desenhaCirculo(x,y,raio);
+            x--;
+            i++;
+        } else if (i==touchLeft){
+            i=raio;
+            x=raio;
+        }
+    }
+
+setInterval(atualizaTela, ballSpeed);
+
+</script>
